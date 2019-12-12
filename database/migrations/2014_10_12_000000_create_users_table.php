@@ -15,11 +15,14 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('first_name', 128);
+            $table->string('last_name', 128);
+            $table->string('phone', 16);
+            $table->string('email', 255)->unique();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('access_token', 32)->unique()->nullable();
+            $table->dateTime('access_token_expired')->nullable();
+            $table->enum('status', ['not_confirmed', 'confirmed', 'blocked', 'deleted'])->default('not_confirmed');
             $table->timestamps();
         });
     }

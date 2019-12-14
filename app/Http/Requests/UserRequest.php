@@ -4,6 +4,15 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @summary Updating of user
+ *
+ * @description
+ *  This request mostly needed to specity flags <strong>free_comparison</strong> and
+ *  <strong>all_cities_available</strong> of user
+ *
+ * @_204 Successful MF!
+ */
 class UserRequest extends FormRequest
 {
 
@@ -25,11 +34,11 @@ class UserRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
-            'password' => 'required'
+            'first_name' => 'required|min:2|max:128',
+            'last_name'  => 'required|min:2|max:128',
+            'phone'      => 'required|min:5|max:16',
+            'email'      => 'required|email|unique:users|max:255',
+            'password'   => 'required|min:8|max:16'
         ];
         switch ($this->getMethod()) {
             case 'POST':

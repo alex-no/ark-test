@@ -71,6 +71,9 @@
                     ARK test blockchain
                 </div>
 
+                <div class="links">
+                    <a href="/docs">Swagger documentations</a>
+                </div>
             </div>
         </div>
     </body>

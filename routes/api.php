@@ -22,3 +22,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('/users', 'UserController')->only([
     'index', 'show', 'create', 'store', 'update', 'edit', //, 'destroy'
 ]);
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+});

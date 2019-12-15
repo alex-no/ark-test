@@ -26,3 +26,7 @@ This is test project.
    For example:
    `LOCAL_DATA_COLLECTOR_PROD_PATH="/var/www/ark-test/storage/swagger/documentation.json"
     LOCAL_DATA_COLLECTOR_TEMP_PATH="/var/www/ark-test/tmp/documentation.json"`
+
+## Additional operations
+
+ - Run command for generate secret-key: `php artisan jwt:secret`

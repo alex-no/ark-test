@@ -7,6 +7,9 @@ use RonasIT\Support\AutoDoc\Services\SwaggerService;
 
 class UserApiTest extends TestCase
 {
+
+    protected $i = 1;
+
     /**
      *
      */
@@ -28,39 +31,71 @@ class UserApiTest extends TestCase
      *
      * @return array
      */
-    public function urlProvider()
+    public function urlProviderSuccessGet()
     {
         return [
-            ['get', '/api/users', []],
-            ['get', '/api/users/1', []]
+            ['/api/users'],
+            ['/api/users/1'],
+        ];
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function urlProviderErrorGet()
+    {
+        return [
+            ['/api/users/111'],
+        ];
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function urlProviderSuccessPost()
+    {
+        return [
+            ['post', '/api/users', ['first_name' => 'Xxxx3', 'last_name' => 'Yyyyy2', 'phone' => '000000000', 'email' => 'email345@dfdf', 'password' => '12345678']],
         ];
     }
 
     /**
      * A basic test example.
-     * @dataProvider urlProvider
+     * @dataProvider urlProviderSuccessGet
      * @return void
      */
-    public function testCommon($method, $uri, array $data)
+    public function testSuccessGet($uri)
     {
-        /*
-        $array = array('names' => array('joe' => array('programmer')));
-        $value = array_get($array, 'names.joe');
-        print_r ($value);
-         */
-
-        /*
-        $array = array_collapse([[1, 2, 3], [4, 5, 6], [7, 8, 9]]);
-        print_r($array);
-        $first = array_first($array, function($key, $value){return $value >= 4;} );
-        print "\n!" . $first . "!\n";
-         */
-
         /* @var $responce \Illuminate\Foundation\Testing\TestResponse */
-        $responce = $this->json($method, $uri, $data);
-
+        $responce = $this->json('get', $uri);
         //print "\n" . $responce->getContent() . "\n";
-
         $responce->assertOk();
     }
+    /**
+     * A basic test example.
+     * @dataProvider urlProviderErrorGet
+     * @return void
+     */
+    public function testErrorGet($uri)
+    {
+        /* @var $responce \Illuminate\Foundation\Testing\TestResponse */
+        $responce = $this->json('get', $uri);
+        //print "\n" . $responce->getContent() . "\n";
+        $responce->assertNotFound();
+    }
+    /**
+     * A basic test example.
+     * @dataProvider urlProviderSuccessPost
+     * @return void
+     */
+    public function otestSuccessPost($method, $uri, array $data)
+    {
+        /* @var $responce \Illuminate\Foundation\Testing\TestResponse */
+        $responce = $this->json($method, $uri, $data);
+        print "\n" . $responce->getContent() . "\n";
+        $responce->assertOk();
+    }
+
 }

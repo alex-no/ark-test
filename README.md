@@ -19,3 +19,10 @@ This is test project.
 
  - Configure your web-server (Apache2, Nginx,...) - create virtual host to directory "public".
  - Try to open site in your browser.
+
+## Configure swagger-parameters
+
+ - In the file ".env" set parameters "LOCAL_DATA_COLLECTOR_PROD_PATH" and "LOCAL_DATA_COLLECTOR_TEMP_PATH" - full paths to file "storage/swagger/documentation.json" and tmp-dirrectory.
+   For example:
+   `LOCAL_DATA_COLLECTOR_PROD_PATH="/var/www/ark-test/storage/swagger/documentation.json"
+   LOCAL_DATA_COLLECTOR_TEMP_PATH="/var/www/ark-test/tmp/documentation.json"`

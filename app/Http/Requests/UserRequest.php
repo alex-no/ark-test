@@ -11,7 +11,16 @@ use Illuminate\Foundation\Http\FormRequest;
  *  This request mostly needed to specity flags <strong>free_comparison</strong> and
  *  <strong>all_cities_available</strong> of user
  *
- * @_204 Successful MF!
+ * @summary Test Post Request for Create/Update User
+ *
+ * @_204 This request has successfully done
+ * @_401 You must remove need-authorization flag from input parameters for pass authorization.
+ * @_404 We so sorry but you entity not exists.
+ * @_422 Wrong input parameter. It must be integer
+ *
+ * @need-authorization If this parameter is true then you will get 401 response
+ * @not-found If this parameter is true then you will get 404 response
+ * @test-parameter This parameter designed for demonstrate unprocesable entity response
  */
 class UserRequest extends FormRequest
 {

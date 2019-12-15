@@ -3,15 +3,45 @@
 namespace Tests\User;
 
 use Tests\TestCase;
+use RonasIT\Support\AutoDoc\Services\SwaggerService;
 
 class UserApiTest extends TestCase
 {
     /**
-     * A basic test example.
      *
+     */
+    protected function tearDown(): void
+    {
+        $currentTestCount = $this->getTestResultObject()->count();
+        $allTestCount = $this->getTestResultObject()->topTestSuite()->count();
+
+        if (($currentTestCount == $allTestCount) && (!$this->hasFailed())) {
+            $autoDocService = app(SwaggerService::class);
+
+            $autoDocService->saveProductionData();
+        }
+
+        parent::tearDown();
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function urlProvider()
+    {
+        return [
+            ['get', '/api/users', []],
+            ['get', '/api/users/1', []]
+        ];
+    }
+
+    /**
+     * A basic test example.
+     * @dataProvider urlProvider
      * @return void
      */
-    public function testCommon()
+    public function testCommon($method, $uri, array $data)
     {
         /*
         $array = array('names' => array('joe' => array('programmer')));
@@ -27,9 +57,9 @@ class UserApiTest extends TestCase
          */
 
         /* @var $responce \Illuminate\Foundation\Testing\TestResponse */
-        $responce = $this->json('get', '/api/users/4');
+        $responce = $this->json($method, $uri, $data);
 
-        print "\n" . $responce->getContent() . "\n";
+        //print "\n" . $responce->getContent() . "\n";
 
         $responce->assertOk();
     }

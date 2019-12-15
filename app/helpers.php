@@ -32,9 +32,14 @@ if (! function_exists('array_collapse')) {
      *
      * @return array
      */
-    function array_collapse()
+    function array_collapse(array $source)
     {
-        return [];
+        $results = [];
+        //array_walk_recursive($source, function ($item, $key) use (&$results){
+        array_walk($source, function ($item, $key) use (&$results){
+            $results = is_array($item) ? array_merge($results, $item) : $results;
+        });
+        return $results;
     }
 }
 
@@ -43,8 +48,13 @@ if (! function_exists('array_first')) {
      *
      * @return mixed
      */
-    function array_first()
+    function array_first(array $source, callable $callback, $default = null)
     {
-        return NULL;
+        foreach ($source as $k => $v) {
+            if (call_user_func_array($callback, [$k, $v])) {
+                return $v;
+            }
+        }
+        return $default;
     }
 }

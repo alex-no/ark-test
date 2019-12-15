@@ -26,3 +26,25 @@ if (! function_exists('array_get')) {
         return $array;
     }
 }
+
+if (! function_exists('array_collapse')) {
+    /**
+     *
+     * @return array
+     */
+    function array_collapse()
+    {
+        return [];
+    }
+}
+
+if (! function_exists('array_first')) {
+    /**
+     *
+     * @return mixed
+     */
+    function array_first()
+    {
+        return NULL;
+    }
+}

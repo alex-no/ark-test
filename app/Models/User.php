@@ -7,7 +7,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 //use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     //use Notifiable;
 
@@ -57,4 +57,24 @@ class User extends Authenticatable
     {
         return [];
     }
+
+    /**
+     * Forward a method call to the given object.
+     *
+     * @param  mixed  $object
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
+     *
+     * @throws \BadMethodCallException
+     */
+    protected function forwardCallTo($object, $method, $parameters)
+    {
+        if (in_array($method, ['create', 'update']) && isset($parameters[0]['password'])) {
+            $parameters[0]['password'] = app('hash')->driver('bcrypt')->make($parameters[0]['password']);
+        }
+        return parent::forwardCallTo($object, $method, $parameters);
+    }
+
+
 }

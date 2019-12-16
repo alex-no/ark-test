@@ -7,6 +7,16 @@ use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['store']]);
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -15,17 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(User $user)
-    {
-        return User::findOrFail($user);
+        return '';
     }
 
     /**
@@ -36,54 +36,21 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $data = User::create($request->all());
-        return $data;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        return User::findOrFail($user);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        return User::findOrFail($user);
+        $result = User::create($request->all());
+        return $result;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\UserRequest  $request
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, User $user)
+    public function update(UserRequest $request)
     {
+        $user = auth()->user();
         $user->update($request->all());
         return $user;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 
 }

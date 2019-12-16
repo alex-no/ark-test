@@ -18,17 +18,24 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
-
+/*
 Route::resource('/users', 'UserController')->only([
-    'index', 'show', 'create', 'store', 'update', 'edit', //, 'destroy'
+    'store', 'update'
 ]);
+ */
+Route::group([
+    'middleware' => 'api',
+], function ($router) {
+    Route::post('user', 'UserController@store');
+    Route::put('user', 'UserController@update');
+});
 
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'auth'
+    'prefix'     => 'auth'
 ], function ($router) {
     Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+    Route::get('logout', 'AuthController@logout');
+    Route::get('refresh', 'AuthController@refresh');
+    Route::get('me', 'AuthController@me');
 });

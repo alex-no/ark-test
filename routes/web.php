@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::any('/login', ['as' => 'not_login', function () {
+  return ['message' => 'You are not authenticated'];
+}]);

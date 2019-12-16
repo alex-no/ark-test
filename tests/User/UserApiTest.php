@@ -3,29 +3,10 @@
 namespace Tests\User;
 
 use Tests\TestCase;
-use RonasIT\Support\AutoDoc\Services\SwaggerService;
 
 class UserApiTest extends TestCase
 {
 
-    protected $i = 1;
-
-    /**
-     *
-     */
-    protected function tearDown(): void
-    {
-        $currentTestCount = $this->getTestResultObject()->count();
-        $allTestCount = $this->getTestResultObject()->topTestSuite()->count();
-
-        if (($currentTestCount == $allTestCount) && (!$this->hasFailed())) {
-            $autoDocService = app(SwaggerService::class);
-
-            $autoDocService->saveProductionData();
-        }
-
-        parent::tearDown();
-    }
 
     /**
      *

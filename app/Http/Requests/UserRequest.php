@@ -45,17 +45,20 @@ class UserRequest extends FormRequest
         $rules = [
             'first_name' => 'required|min:2|max:128',
             'last_name'  => 'required|min:2|max:128',
-            'phone'      => 'required|min:5|max:16',
-            'email'      => 'required|email|unique:users|max:255',
-            'password'   => 'required|min:8|max:16'
         ];
         switch ($this->getMethod()) {
             case 'POST':
-                return $rules;
+                return $rules + [
+                    'phone'    => 'required|min:5|max:16',
+                    'email'    => 'required|email|unique:users|max:255',
+                    'password' => 'required|min:8|max:16'
+                ];
             case 'PUT':
-                return [] + $rules;
-            // case 'PATCH':
-            //case 'DELETE':
+                return $rules + [
+                    'phone'    => 'min:5|max:16',
+                    'email'    => 'email|max:255',
+                    'password' => 'min:8|max:16'
+                ];
         }
         return NULL;
     }

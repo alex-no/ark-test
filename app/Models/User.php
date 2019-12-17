@@ -12,6 +12,13 @@ class User extends Authenticatable implements JWTSubject
     //use Notifiable;
 
     /**
+     * The storage format of the model's date columns.
+     *
+     * @var string
+     */
+    protected $dateFormat = 'Y-m-d H:i:s';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -59,22 +66,12 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Forward a method call to the given object.
-     *
-     * @param  mixed  $object
-     * @param  string  $method
-     * @param  array  $parameters
-     * @return mixed
-     *
-     * @throws \BadMethodCallException
+     * Set Password Attribute - convertor
+     * @param type $value
      */
-    protected function forwardCallTo($object, $method, $parameters)
+    public function setPasswordAttribute($value)
     {
-        if (in_array($method, ['create', 'update']) && isset($parameters[0]['password'])) {
-            $parameters[0]['password'] = app('hash')->driver('bcrypt')->make($parameters[0]['password']);
-        }
-        return parent::forwardCallTo($object, $method, $parameters);
+        $this->attributes['password'] = app('hash')->driver('bcrypt')->make($value);
     }
-
 
 }

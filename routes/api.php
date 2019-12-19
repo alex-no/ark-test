@@ -18,11 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
-/*
-Route::resource('/users', 'UserController')->only([
-    'store', 'update'
-]);
- */
 Route::group([
     'middleware' => 'api',
 ], function ($router) {
@@ -38,4 +33,16 @@ Route::group([
     Route::get('logout', 'AuthController@logout');
     Route::get('refresh', 'AuthController@refresh');
     Route::get('me', 'AuthController@me');
+});
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::resource('/wallets', 'WalletController')->only([
+        'index', 'show'
+    ]);
+    Route::resource('/blocks', 'BlockController')->only([
+        'index', 'show'
+    ]);
+    Route::resource('/transactions', 'TransactionController')->only([
+        'index', 'show'
+    ]);
 });
